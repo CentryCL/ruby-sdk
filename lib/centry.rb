@@ -66,7 +66,7 @@ class Centry
   # @var payload (opcional) Body del request puede ser un objeto PHP o un arreglo (diccionario), internamente es transformado a JSON.
   def request(endpoint, method, params = {}, payload = {})
     query = params ? URI.encode_www_form(params) : ""
-    uri = URI("http://localhost:3000/#{endpoint}?#{query}")
+    uri = URI("https://www.centry.cl/#{endpoint}?#{query}")
     # uri = URI("https://www.centry.cl/#{endpoint}?#{query}")
     header = {
       "Content-Type" => "application/json",
