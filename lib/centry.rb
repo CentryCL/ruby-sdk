@@ -67,22 +67,20 @@ class Centry
   def request(endpoint, method, params = {}, payload = {})
     query = params ? URI.encode_www_form(params) : ""
     uri = URI("https://www.centry.cl/#{endpoint}?#{query}")
-    # uri = URI("https://www.centry.cl/#{endpoint}?#{query}")
     header = {
       "Content-Type" => "application/json",
       "Accept" => "application/json"
     }
-    # header["Authorization"] = "Bearer #{@access_token}" #if !PUBLIC_ENDPOINTS.include?(endpoint)
     req = case method
     when :get    then Net::HTTP::Get.new(uri, header)
     when :post   then Net::HTTP::Post.new(uri, header)
     when :put    then Net::HTTP::Put.new(uri, header)
     when :delete then Net::HTTP::Delete.new(uri, header)
     end
-    req.add_field("Authorization", "Bearer #{@access_token}") #if !PUBLIC_ENDPOINTS.include?(endpoint)
+    req.add_field("Authorization", "Bearer #{@access_token}") if !PUBLIC_ENDPOINTS.include?(endpoint)
 
     req.body = JSON.generate(payload) if payload && payload != {}
-    return Net::HTTP.start(uri.hostname, uri.port, use_ssl: false) do |http|
+    return Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
       http.request(req)
     end
   end

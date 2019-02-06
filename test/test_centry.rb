@@ -1,22 +1,23 @@
 require 'minitest/autorun'
+require "cgi"
 require 'centry'
 
 class CentryTest < Minitest::Test
   def setup
-    @sdk = Centry.new(
-      "client_id",
-      "client_secret",
-      "urn:ietf:wg:oauth:2.0:oob"
-    )
+    @client_id = ""
+    @client_secret = ""
+    @redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
+    @authorization_code = ""
+    @sdk = Centry.new(@client_id,   @client_secret,   @redirect_uri)
   end
 
   def test_authorization
     # test_authorization_url
-    assert_equal "https://www.centry.cl/oauth/authorize?client_id=client_id&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=public+read_orders",
+    assert_equal "https://www.centry.cl/oauth/authorize?client_id=#{@client_id}&redirect_uri=#{CGI.escape(@redirect_uri)}&response_type=code&scope=public+read_orders",
     @sdk.authorization_url("public read_orders")
 
     # test_authorize
-    @sdk.authorize("code")
+    @sdk.authorize(@authorization_code)
     assert_equal true, @sdk.access_token.length > 0 && @sdk.refresh_token.length > 0
 
     # test_refresh
