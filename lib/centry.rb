@@ -106,12 +106,12 @@ class Centry
     grant("refresh_token", {refresh_token: @refresh_token})
   end
 
-  def client_credentials
-    grant("client_credentials")
+  def client_credentials(scope = nil)
+    grant("client_credentials", scope != nil && scope.strip != "" ? {scope: scope} : {})
   end
 
   private
-  def grant(grant_type, extras = {})
+  def grant(grant_type, extras)
     endpoint = "oauth/token"
     method = :post
     params = nil

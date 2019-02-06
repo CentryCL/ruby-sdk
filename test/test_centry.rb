@@ -34,11 +34,12 @@ class CentryTest < Minitest::Test
 
   def test_client_credentials
     # test_authorize
-    @sdk.client_credentials
+    @sdk.client_credentials("public read_orders write_webhook")
     assert_equal true, @sdk.access_token.length > 0
+    assert_equal "public read_orders write_webhook", @sdk.scope
 
     # test_list_code
-    assert_equal "200", @sdk.request("conexion/v1/sizes.json", :get, {limit: 5}).code
+    assert_equal "200", @sdk.request("conexion/v1/orders.json", :get, {limit: 5}).code
 
     # test_list_sizes
     assert_equal 5, JSON.parse(@sdk.request("conexion/v1/sizes.json", :get, {limit: 5}).body).length
