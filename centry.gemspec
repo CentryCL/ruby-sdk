@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "centry"
-  s.version     = "0.0.3"
-  s.date        = "2019-02-06"
+  s.version     = "0.0.4"
+  s.date        = "2019-06-14"
   s.summary     = "Centry SDK"
   s.description = "Centry's Ruby SDK"
   s.authors     = ["Elías Lama L."]
