@@ -150,7 +150,7 @@ class Centry
   # @param [Hash] params (opcional) Llaves y valores que irán en la URL como
   # parámetros GET
   def delete(endpoint, params = {})
-    request(endpoint, :delete, params, payload)
+    request(endpoint, :delete, params)
   end
 
   # Una vez que un usuario ha autorizado nuestra aplicación para que accceda a
